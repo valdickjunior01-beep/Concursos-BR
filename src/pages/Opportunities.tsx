@@ -747,30 +747,39 @@ export default function Opportunities() {
       {/* DESKTOP/TABLET: Tabela (block apenas em md:) */}
       <div className="hidden md:block bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-sm border-collapse">
+          <table className="w-full text-left text-sm border-collapse table-fixed">
             <thead className="bg-slate-50 text-slate-600 font-medium border-b border-slate-100">
               <tr>
-                <th className="px-6 py-4 w-10"></th>
-                <th className="px-6 py-4 cursor-pointer hover:bg-slate-100 transition-colors" onClick={() => handleSort('institution')}>
-                  <div className="flex items-center uppercase text-[11px] tracking-wider">Órgão / Instituição <SortIcon column="institution" /></div>
+                <th className="px-3 py-4 w-12"></th>
+                <th className="px-3 py-4 w-[28%] cursor-pointer hover:bg-slate-100 transition-colors" onClick={() => handleSort('institution')}>
+                  <div className="flex items-center uppercase text-[11px] tracking-wider">Órgão <SortIcon column="institution" /></div>
                 </th>
-                <th className="px-6 py-4 cursor-pointer hover:bg-slate-100 transition-colors" onClick={() => handleSort('score')}>
-                  <div className="flex items-center uppercase text-[11px] tracking-wider">Pontuação <SortIcon column="score" /></div>
+                <th className="px-3 py-4 w-16 cursor-pointer hover:bg-slate-100 transition-colors" onClick={() => handleSort('location')}>
+                  <div className="flex items-center uppercase text-[11px] tracking-wider">UF <SortIcon column="location" /></div>
                 </th>
-                <th className="px-6 py-4 cursor-pointer hover:bg-slate-100 transition-colors" onClick={() => handleSort('status')}>
+                <th className="px-3 py-4 w-24 cursor-pointer hover:bg-slate-100 transition-colors" onClick={() => handleSort('board')}>
+                  <div className="flex items-center uppercase text-[11px] tracking-wider">Banca <SortIcon column="board" /></div>
+                </th>
+                <th className="px-3 py-4 w-28 cursor-pointer hover:bg-slate-100 transition-colors" onClick={() => handleSort('salary')}>
+                  <div className="flex items-center uppercase text-[11px] tracking-wider">Salário <SortIcon column="salary" /></div>
+                </th>
+                <th className="px-3 py-4 w-20 cursor-pointer hover:bg-slate-100 transition-colors" onClick={() => handleSort('score')}>
+                  <div className="flex items-center uppercase text-[11px] tracking-wider">Score <SortIcon column="score" /></div>
+                </th>
+                <th className="px-3 py-4 w-28 cursor-pointer hover:bg-slate-100 transition-colors" onClick={() => handleSort('status')}>
                   <div className="flex items-center uppercase text-[11px] tracking-wider">Status <SortIcon column="status" /></div>
                 </th>
-                <th className="px-6 py-4 cursor-pointer hover:bg-slate-100 transition-colors" onClick={() => handleSort('exam_date')}>
-                  <div className="flex items-center uppercase text-[11px] tracking-wider">Data Prova <SortIcon column="exam_date" /></div>
+                <th className="px-3 py-4 w-28 cursor-pointer hover:bg-slate-100 transition-colors" onClick={() => handleSort('exam_date')}>
+                  <div className="flex items-center uppercase text-[11px] tracking-wider">Prova <SortIcon column="exam_date" /></div>
                 </th>
-                <th className="px-6 py-4 text-right uppercase text-[11px] tracking-wider">Ações</th>
+                <th className="px-3 py-4 w-24 text-center uppercase text-[11px] tracking-wider">Ações</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100">
               {concursos.length === 0 ? (
-                <tr><td colSpan={6} className="px-6 py-8 text-center text-slate-500">Nenhum concurso encontrado.</td></tr>
+                <tr><td colSpan={9} className="px-6 py-8 text-center text-slate-500">Nenhum concurso encontrado.</td></tr>
               ) : processedConcursos.length === 0 ? (
-                <tr><td colSpan={6} className="px-6 py-8 text-center text-slate-500">Nenhum resultado para a busca.</td></tr>
+                <tr><td colSpan={9} className="px-6 py-8 text-center text-slate-500">Nenhum resultado para a busca.</td></tr>
               ) : (
                 <>
                   {visibleConcursos.map((c, index) => {
@@ -788,86 +797,88 @@ export default function Opportunities() {
                           )}
                           onClick={() => setExpandedRow(isExpanded ? null : c.id)}
                         >
-                          <td className="px-6 py-4">
+                          <td className="px-3 py-3">
                             <div className={clsx(
-                              "w-8 h-8 rounded-lg flex items-center justify-center transition-colors",
+                              "w-7 h-7 rounded-lg flex items-center justify-center transition-colors",
                               isExpanded ? "bg-indigo-50 text-indigo-600" : "bg-slate-50 text-slate-400"
                             )}>
-                              {isExpanded ? <ChevronDown size={18} /> : <ChevronRight size={18} />}
+                              {isExpanded ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
                             </div>
                           </td>
-                          <td className="px-6 py-4">
-                            <div className="flex items-center space-x-3">
-                              <div className="min-w-0">
-                                <div className="flex items-center gap-2 mb-0.5">
-                                  <div className="font-bold text-slate-900 truncate text-sm">{c.institution}</div>
-                                  <div className="flex items-center gap-1">
-                                    <span className="font-mono text-[10px] bg-slate-100 px-1.5 py-0.5 rounded text-slate-500 font-bold flex-shrink-0 uppercase">{c.location}</span>
-                                    <span className="text-[10px] text-slate-400 font-medium truncate max-w-[100px]">
-                                      {c.board && c.board !== 'N/A' ? c.board : 'Banca a definir'}
-                                    </span>
-                                  </div>
-                                </div>
-                                <div className="text-emerald-600 font-semibold text-xs">
-                                  {c.salary && c.salary !== 'N/A' ? c.salary : 'Consulte o edital'}
-                                </div>
-                              </div>
+                          <td className="px-3 py-3">
+                            <div className="font-semibold text-slate-900 text-sm truncate" title={c.institution}>
+                              {c.institution}
                             </div>
                           </td>
-                          <td className="px-6 py-4">
-                            <div className="flex items-center space-x-2 text-emerald-600">
-                              <Trophy size={16} />
-                              <span className="font-bold text-base">{c.calculatedScore}</span>
+                          <td className="px-3 py-3">
+                            <span className="font-mono text-[11px] bg-slate-100 px-2 py-1 rounded text-slate-600 font-bold uppercase">
+                              {c.location}
+                            </span>
+                          </td>
+                          <td className="px-3 py-3">
+                            <span className="text-xs text-slate-600 font-medium truncate block" title={c.board}>
+                              {c.board && c.board !== 'N/A' ? c.board : '-'}
+                            </span>
+                          </td>
+                          <td className="px-3 py-3">
+                            <span className="text-xs text-emerald-600 font-semibold truncate block" title={c.salary}>
+                              {c.salary && c.salary !== 'N/A' ? c.salary : '-'}
+                            </span>
+                          </td>
+                          <td className="px-3 py-3">
+                            <div className="flex items-center gap-1.5 text-amber-600">
+                              <Trophy size={14} />
+                              <span className="font-bold text-sm">{c.calculatedScore}</span>
                             </div>
                           </td>
-                          <td className="px-6 py-4">
+                          <td className="px-3 py-3">
                             <StatusBadge status={status as any} />
                           </td>
-                          <td className="px-6 py-4 text-slate-500">
-                            <div className="flex items-center gap-2">
-                              <Calendar size={14} className="text-slate-400" />
-                              <span className="font-medium">{c.exam_date && c.exam_date !== 'N/A' ? c.exam_date : 'Consultar Edital'}</span>
+                          <td className="px-3 py-3 text-slate-500">
+                            <div className="flex items-center gap-1.5">
+                              <Calendar size={12} className="text-slate-400 flex-shrink-0" />
+                              <span className="text-xs font-medium truncate">{c.exam_date && c.exam_date !== 'N/A' ? c.exam_date : '-'}</span>
                             </div>
                           </td>
-                          <td className="px-6 py-4 text-right" onClick={(e) => e.stopPropagation()}>
-                            <div className="flex items-center justify-end space-x-2">
+                          <td className="px-3 py-3 text-center" onClick={(e) => e.stopPropagation()}>
+                            <div className="flex items-center justify-center gap-1">
                               {c.link && c.link !== 'N/A' && (
-                                <a href={c.link} target="_blank" rel="noopener noreferrer" referrerPolicy="no-referrer" className="p-2 text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-all" title="Acessar Edital">
-                                  <ExternalLink size={18} />
+                                <a href={c.link} target="_blank" rel="noopener noreferrer" referrerPolicy="no-referrer" className="p-1.5 text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-all" title="Acessar Edital">
+                                  <ExternalLink size={16} />
                                 </a>
                               )}
                               
                               <button 
                                 onClick={() => handleMarkInterest(c.id, c.interest_status === 'interested' ? 'none' : 'interested')}
                                 className={clsx(
-                                  "flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[11px] font-bold transition-all shadow-sm",
+                                  "p-1.5 rounded-lg transition-all",
                                   c.interest_status === 'interested' 
                                     ? "bg-emerald-600 text-white hover:bg-emerald-700" 
-                                    : "bg-emerald-50 text-emerald-700 border border-emerald-100 hover:bg-emerald-100"
+                                    : "text-emerald-600 hover:bg-emerald-50"
                                 )}
+                                title={c.interest_status === 'interested' ? 'Remover interesse' : 'Marcar interesse'}
                               >
-                                <Check size={14} />
-                                <span>{c.interest_status === 'interested' ? 'Interessado' : 'Interesse'}</span>
+                                <Check size={16} />
                               </button>
                               
                               <button 
                                 onClick={() => handleMarkInterest(c.id, c.interest_status === 'ignored' ? 'none' : 'ignored')}
                                 className={clsx(
-                                  "flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[11px] font-bold transition-all shadow-sm",
+                                  "p-1.5 rounded-lg transition-all",
                                   c.interest_status === 'ignored'
                                     ? "bg-rose-600 text-white hover:bg-rose-700"
-                                    : "bg-rose-50 text-rose-700 border border-rose-100 hover:bg-rose-100"
+                                    : "text-rose-600 hover:bg-rose-50"
                                 )}
+                                title={c.interest_status === 'ignored' ? 'Restaurar' : 'Ignorar'}
                               >
-                                <X size={14} />
-                                <span>{c.interest_status === 'ignored' ? 'Ignorado' : 'Ignorar'}</span>
+                                <X size={16} />
                               </button>
                             </div>
                           </td>
                         </tr>
                         {isExpanded && (
                           <tr className="bg-slate-50/50">
-                            <td colSpan={6} className="p-6">
+                            <td colSpan={9} className="p-6">
                               <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                                 {/* Informações Gerais - Bento Style */}
                                 <div className="lg:col-span-1 space-y-4">
